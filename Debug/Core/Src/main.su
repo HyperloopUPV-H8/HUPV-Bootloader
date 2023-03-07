@@ -1,6 +1,5 @@
-../Core/Src/../Tests/flash_test.h:13:6:flash_test	131088	static
-../Core/Src/main.c:67:5:main	152	static
-../Core/Src/main.c:122:6:SystemClock_Config	120	static
-../Core/Src/main.c:185:13:MX_FDCAN1_Init	8	static
-../Core/Src/main.c:238:13:MX_GPIO_Init	48	static
-../Core/Src/main.c:272:6:Error_Handler	4	static,ignoring_inline_asm
+../Core/Src/main.c:70:5:main	24	static
+../Core/Src/main.c:139:6:SystemClock_Config	120	static
+../Core/Src/main.c:202:13:MX_FDCAN1_Init	8	static
+../Core/Src/main.c:255:13:MX_GPIO_Init	56	static
+../Core/Src/main.c:290:6:Error_Handler	4	static,ignoring_inline_asm

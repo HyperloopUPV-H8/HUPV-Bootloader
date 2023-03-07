@@ -57,7 +57,10 @@ static void MX_FDCAN1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+//FDCAN_TxHeaderTypeDef   TxHeader;
+//uint8_t               	TxData[64];
+//int indx = 0;
+uint8_t data[64];
 /* USER CODE END 0 */
 
 /**
@@ -91,16 +94,20 @@ int main(void)
   MX_FDCAN1_Init();
   /* USER CODE BEGIN 2 */
   //bootloader_init();
-  fdcan_start();
 
-  uint8_t data[64];
+
   int i;
   uint8_t d = 0xA;
   for (i = 0; i < 64; ++i) {
 	data[i] = d++;
   }
 
-  fdcan_packet_t p = {data, 69};
+  fdcan_packet_t p = { 69, data};
+
+
+
+  HAL_FDCAN_Start(&hfdcan1);
+  HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
   /* USER CODE END 2 */
 
@@ -108,8 +115,16 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  fdcan_transmit(data);
-	  HAL_Delay(100);
+	  fdcan_transmit(&p);
+
+//	  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData)!= HAL_OK)
+//	   {
+//	    Error_Handler();
+//	   }
+	  //HAL_Delay(100);
+	 // int a = fdcan_test();
+
+	  fdcan_read(&p);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -150,7 +165,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 2;
   RCC_OscInitStruct.PLL.PLLN = 44;
   RCC_OscInitStruct.PLL.PLLP = 1;
-  RCC_OscInitStruct.PLL.PLLQ = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -219,7 +234,7 @@ static void MX_FDCAN1_Init(void)
   hfdcan1.Init.RxBufferSize = FDCAN_DATA_BYTES_64;
   hfdcan1.Init.TxEventsNbr = 0;
   hfdcan1.Init.TxBuffersNbr = 0;
-  hfdcan1.Init.TxFifoQueueElmtsNbr = 0;
+  hfdcan1.Init.TxFifoQueueElmtsNbr = 16;
   hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
   hfdcan1.Init.TxElmtSize = FDCAN_DATA_BYTES_64;
   if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK)
@@ -246,16 +261,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, LED_CAN_Pin|LED_FLASH_Pin|LED_CANG6_Pin|LED_FAULT_Pin
-                          |LED_OP_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, LED_SLEEP_Pin|LED_FLASH_Pin|LED_CAN_Pin|LED_FAULT_Pin
+                          |LED_OPERATIONAL_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_CAN_Pin LED_FLASH_Pin LED_CANG6_Pin LED_FAULT_Pin
-                           LED_OP_Pin */
-  GPIO_InitStruct.Pin = LED_CAN_Pin|LED_FLASH_Pin|LED_CANG6_Pin|LED_FAULT_Pin
-                          |LED_OP_Pin;
+  /*Configure GPIO pins : LED_SLEEP_Pin LED_FLASH_Pin LED_CAN_Pin LED_FAULT_Pin
+                           LED_OPERATIONAL_Pin */
+  GPIO_InitStruct.Pin = LED_SLEEP_Pin|LED_FLASH_Pin|LED_CAN_Pin|LED_FAULT_Pin
+                          |LED_OPERATIONAL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

@@ -26,26 +26,18 @@ typedef enum{
 }fdcan_error_t;
 
 typedef struct {
-	uint8_t data[64];
 	uint16_t identifier;
+	uint8_t* data;
 
 }fdcan_packet_t;
 
-typedef struct{
-    FDCAN_HandleTypeDef* hfdcan;
-    FDCAN_TxHeaderTypeDef tx_header;
-    uint32_t rx_location;
-
-}fdcan_instance_t;
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
 
-fdcan_error_t const fdcan_start(void);
+fdcan_error_t const fdcan_transmit(fdcan_packet_t* packet);
 
-fdcan_error_t const fdcan_transmit(fdcan_packet_t* data);
-
-fdcan_error_t const fdcan_read(fdcan_packet_t* data);
+fdcan_error_t const fdcan_read(fdcan_packet_t* packet);
 
 int const fdcan_test(void);
 

@@ -7,6 +7,3 @@
 ../Core/Src/stm32h7xx_it.c:157:6:DebugMon_Handler	4	static
 ../Core/Src/stm32h7xx_it.c:170:6:PendSV_Handler	4	static
 ../Core/Src/stm32h7xx_it.c:183:6:SysTick_Handler	8	static
-../Core/Src/stm32h7xx_it.c:204:6:FDCAN1_IT0_IRQHandler	8	static
-../Core/Src/stm32h7xx_it.c:218:6:FDCAN1_IT1_IRQHandler	8	static
-../Core/Src/stm32h7xx_it.c:232:6:FDCAN_CAL_IRQHandler	8	static

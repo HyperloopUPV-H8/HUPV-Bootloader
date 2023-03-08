@@ -93,7 +93,6 @@ int main(void)
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
   bootloader_start();
-  //flash_test();
   /* USER CODE END 2 */
 
   /* Infinite loop */

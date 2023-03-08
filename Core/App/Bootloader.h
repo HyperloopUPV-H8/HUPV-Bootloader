@@ -12,7 +12,7 @@
 #include "Flash.h"
 #include "FDCAN.h"
 
-#define BOOTLOADER_VERSION (0x01)
+#define BOOTLOADER_VERSION (0x02)
 
 /****************************************************************************************
 * Type definitions

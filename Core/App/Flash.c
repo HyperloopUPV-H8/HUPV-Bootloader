@@ -53,7 +53,6 @@ flash_error const flash_write(uint32_t dest_addr, uint32_t* data, uint32_t numbe
 			return FLASH_PROTECTED_MEM;
 		}
 
-		data[index] = index;
 		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_FLASHWORD, start_sector_addr, (uint32_t)&data[index]) == HAL_OK) {
 			start_sector_addr += FLASH_WORD_SIZE;
 			index += FLASH_WORD_SIZE / FLASH_32BITS_WORLD;

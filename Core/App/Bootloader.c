@@ -65,8 +65,6 @@ void bootloader_start(){
 }
 
 void const __b_get_version(fdcan_packet_t* packet){
-	__b_clean_fdcan_packet_all(packet);
-
 	__b_send_ack(packet);
 
 	packet->data[0] = BOOTLOADER_VERSION;
@@ -133,8 +131,19 @@ void const __b_write_memory(fdcan_packet_t* packet){
 			__b_send_nack(packet);
 			return;
 		}
-		__b_data_copy_to_packet(packet, ((uint8_t*)&(buffer[i])));
+
+		if (packet->identifier != WRITE_MEMORY_ORDER) {
+			packet->identifier = WRITE_MEMORY_ORDER;
+			__b_send_nack(packet);
+			return;
+		}
+
+		__b_data_copy_from_packet(packet, ((uint8_t*)&(buffer[i])));
 	}
+
+	flash_write(address, buffer, SECTOR_SIZE_IN_32BITS_WORDS);
+
+	__b_send_ack(packet);
 }
 
 void const __b_erase_memory(fdcan_packet_t* packet){
@@ -168,6 +177,15 @@ void const __b_data_copy_to_packet(fdcan_packet_t* packet, uint8_t* data){
 		packet->data[i] = data[i];
 	}
 }
+
+void const __b_data_copy_from_packet(fdcan_packet_t* packet, uint8_t* data){
+	uint8_t i;
+
+	for (i = 0; i < 64; ++i) {
+		data[i] = packet->data[i];
+	}
+}
+
 
 void const __b_send_ack(fdcan_packet_t* packet){
 	__b_clean_fdcan_packet_data(packet);

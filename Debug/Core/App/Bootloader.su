@@ -1,1 +1,13 @@
-../Core/App/Bootloader.c:10:6:bootloader_init	4	static
+../Core/App/Bootloader.c:33:6:bootloader_start	80	static
+../Core/App/Bootloader.c:66:12:__b_get_version	16	static
+../Core/App/Bootloader.c:80:12:__b_read_memory	131104	static
+../Core/App/Bootloader.c:113:12:__b_write_memory	16	static
+../Core/App/Bootloader.c:115:12:__b_erase_memory	24	static
+../Core/App/Bootloader.c:135:12:__b_go	16	static
+../Core/App/Bootloader.c:137:12:__b_data_copy_to_packet	24	static
+../Core/App/Bootloader.c:145:12:__b_send_ack	16	static
+../Core/App/Bootloader.c:151:12:__b_send_nack	16	static
+../Core/App/Bootloader.c:157:16:__b_get_addr_from_data	24	static
+../Core/App/Bootloader.c:163:12:__b_clean_fdcan_packet_data	24	static
+../Core/App/Bootloader.c:171:12:__b_clean_fdcan_packet_all	24	static
+../Core/App/Bootloader.c:182:12:__b_wait_until_fdcan_message_received	8	static

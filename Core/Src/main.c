@@ -57,10 +57,6 @@ static void MX_FDCAN1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//FDCAN_TxHeaderTypeDef   TxHeader;
-//uint8_t               	TxData[64];
-//int indx = 0;
-uint8_t data[64];
 /* USER CODE END 0 */
 
 /**
@@ -93,38 +89,17 @@ int main(void)
   MX_GPIO_Init();
   MX_FDCAN1_Init();
   /* USER CODE BEGIN 2 */
-  //bootloader_init();
-
-
-  int i;
-  uint8_t d = 0xA;
-  for (i = 0; i < 64; ++i) {
-	data[i] = d++;
-  }
-
-  fdcan_packet_t p = { 69, data};
-
-
-
   HAL_FDCAN_Start(&hfdcan1);
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
+  bootloader_start();
+  //flash_test();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  fdcan_transmit(&p);
-
-//	  if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData)!= HAL_OK)
-//	   {
-//	    Error_Handler();
-//	   }
-	  //HAL_Delay(100);
-	 // int a = fdcan_test();
-
-	  fdcan_read(&p);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -294,6 +269,11 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+	  HAL_GPIO_TogglePin(LED_FAULT_GPIO_Port, LED_FAULT_Pin);
+	  uint32_t i;
+	  for (i = 0; i < 10000000; ++i) {
+		  __NOP();
+	  }
   }
   /* USER CODE END Error_Handler_Debug */
 }

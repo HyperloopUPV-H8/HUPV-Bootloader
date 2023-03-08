@@ -27,7 +27,7 @@ typedef enum{
 
 typedef struct {
 	uint16_t identifier;
-	uint8_t* data;
+	uint8_t data[64];
 
 }fdcan_packet_t;
 

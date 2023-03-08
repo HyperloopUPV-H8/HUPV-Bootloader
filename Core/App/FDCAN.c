@@ -30,16 +30,10 @@ fdcan_error_t const fdcan_transmit(fdcan_packet_t* packet){
 	return FDCAN_OK;
 }
 
-//void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs){
-//	__NOP();
-//
-//}
-
 fdcan_error_t const fdcan_read(fdcan_packet_t* packet){
-//	if(!fdcan_test) {
-//		return FDCAN_EMPTY;
-//	}
-
+	if(!fdcan_test) {
+		return FDCAN_EMPTY;
+	}
 
 	HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &rx_header_buffer, packet->data);
 
@@ -48,5 +42,5 @@ fdcan_error_t const fdcan_read(fdcan_packet_t* packet){
 }
 
 int const fdcan_test(void){
-	return HAL_FDCAN_IsRxBufferMessageAvailable(&hfdcan1, 0);
+	return !((hfdcan1.Instance->RXF0S & FDCAN_RXF0S_F0FL) == 0U);
 }

@@ -11,7 +11,7 @@
 * Function prototypes
 ****************************************************************************************/
 sector_t const __flash_get_sector(const uint32_t address);
-uint32_t const __flash_get_sector_starting_address(const sector_t sector);
+uint32_t const flash_get_sector_starting_address(const sector_t sector);
 
 flash_error const flash_read(uint32_t source_addr, uint32_t* result, uint32_t number_of_words){
 	if (source_addr < FLASH_START_ADDRESS || source_addr > FLASH_CODE_END_ADDRESS) {
@@ -20,7 +20,7 @@ flash_error const flash_read(uint32_t source_addr, uint32_t* result, uint32_t nu
 
 	HAL_FLASH_Unlock();
 	uint32_t i;
-	for (i = 0; i < number_of_words * FLASH_WORD; i+=4) {
+	for (i = 0; i < number_of_words; i++) {
 		*result = *(__IO uint32_t *)(source_addr);
 		source_addr += 4;
 		result++;
@@ -38,9 +38,9 @@ flash_error const flash_write(uint32_t dest_addr, uint32_t* data, uint32_t numbe
 	uint32_t index = 0;
 
 	sector_t start_sector =__flash_get_sector(dest_addr);;
-	uint32_t start_sector_addr = __flash_get_sector_starting_address(start_sector);
+	uint32_t start_sector_addr = flash_get_sector_starting_address(start_sector);
 
-	uint32_t end_address = dest_addr + ((number_of_words * 4) - 4);
+	uint32_t end_address = dest_addr + ((number_of_words * FLASH_32BITS_WORLD) - FLASH_32BITS_WORLD);
 	uint32_t end_sector = __flash_get_sector(end_address);
 
 	if (flash_erase(start_sector, end_sector) != FLASH_OK) {
@@ -48,15 +48,15 @@ flash_error const flash_write(uint32_t dest_addr, uint32_t* data, uint32_t numbe
 	}
 
 	HAL_FLASH_Unlock();
-	while(index < (uint32_t)SECTOR_SIZE_IN_WORDS){
+	while(index < (uint32_t)SECTOR_SIZE_IN_32BITS_WORDS){
 		if (start_sector_addr > FLASH_CODE_END_ADDRESS) {
 			return FLASH_PROTECTED_MEM;
 		}
 
 		data[index] = index;
 		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_FLASHWORD, start_sector_addr, (uint32_t)&data[index]) == HAL_OK) {
-			start_sector_addr += 4 * FLASH_WORD;
-			index += FLASH_WORD;
+			start_sector_addr += FLASH_WORD_SIZE;
+			index += FLASH_WORD_SIZE / FLASH_32BITS_WORLD;
 		}else{
 			HAL_FLASH_Lock();
 			return FLASH_ERROR;;
@@ -135,7 +135,7 @@ sector_t const __flash_get_sector(const uint32_t address){
 	return sector;
 }
 
-uint32_t const __flash_get_sector_starting_address(const sector_t sector){
+uint32_t const flash_get_sector_starting_address(const sector_t sector){
 	uint32_t address;
 	switch ((uint32_t)sector) {
 		case FLASH_SECTOR_0:
@@ -163,7 +163,7 @@ uint32_t const __flash_get_sector_starting_address(const sector_t sector){
 			address = FLASH_SECTOR7_START_ADDRESS;
 			break;
 		default:
-			address = FLASH_SECTOR0_START_ADDRESS;
+			address = FLASH_SECTOR_ERROR;
 			break;
 	}
 

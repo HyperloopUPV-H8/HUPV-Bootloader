@@ -16,7 +16,7 @@
 
 #define BOOTLOADER_BLOCK_SIZE 	((uint8_t)8U)
 
-#define BOOTLOADER_MAX_TIMEOUT  ((uint32_t) 2000)
+#define BOOTLOADER_MAX_TIMEOUT  ((uint32_t) 1000)
 
 
 /****************************************************************************************

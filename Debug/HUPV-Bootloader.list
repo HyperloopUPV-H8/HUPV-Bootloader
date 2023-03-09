@@ -735,6 +735,7 @@ bootloader_error_t const __b_wait_for_ack(bootloader_order_t order){
  80e079a:	2301      	movs	r3, #1
  80e079c:	e011      	b.n	80e07c2 <__b_wait_for_ack+0x3c>
 	}
+
 	fdcan_packet_t packet;
 	fdcan_read(&packet);
  80e079e:	f107 030c 	add.w	r3, r7, #12
@@ -910,7 +911,7 @@ bootloader_error_t const __b_wait_until_fdcan_message_received(void){
  80e0886:	4b08      	ldr	r3, [pc, #32]	; (80e08a8 <__b_wait_until_fdcan_message_received+0x30>)
  80e0888:	681b      	ldr	r3, [r3, #0]
  80e088a:	6a5b      	ldr	r3, [r3, #36]	; 0x24
- 80e088c:	f644 6220 	movw	r2, #20000	; 0x4e20
+ 80e088c:	f242 7210 	movw	r2, #10000	; 0x2710
  80e0890:	4293      	cmp	r3, r2
  80e0892:	d901      	bls.n	80e0898 <__b_wait_until_fdcan_message_received+0x20>
 			return BOOTLOADER_ERROR;

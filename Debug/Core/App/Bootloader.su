@@ -7,9 +7,9 @@
 ../Core/App/Bootloader.c:193:12:__b_data_copy_to_packet	24	static
 ../Core/App/Bootloader.c:201:12:__b_data_copy_from_packet	24	static
 ../Core/App/Bootloader.c:209:26:__b_wait_for_ack	88	static
-../Core/App/Bootloader.c:226:12:__b_send_ack	16	static
-../Core/App/Bootloader.c:232:12:__b_send_nack	16	static
-../Core/App/Bootloader.c:238:16:__b_get_addr_from_data	24	static
-../Core/App/Bootloader.c:244:12:__b_clean_fdcan_packet_data	24	static
-../Core/App/Bootloader.c:252:12:__b_clean_fdcan_packet_all	24	static
-../Core/App/Bootloader.c:263:26:__b_wait_until_fdcan_message_received	8	static
+../Core/App/Bootloader.c:227:12:__b_send_ack	16	static
+../Core/App/Bootloader.c:233:12:__b_send_nack	16	static
+../Core/App/Bootloader.c:239:16:__b_get_addr_from_data	24	static
+../Core/App/Bootloader.c:245:12:__b_clean_fdcan_packet_data	24	static
+../Core/App/Bootloader.c:253:12:__b_clean_fdcan_packet_all	24	static
+../Core/App/Bootloader.c:264:26:__b_wait_until_fdcan_message_received	8	static

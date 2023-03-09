@@ -210,6 +210,7 @@ bootloader_error_t const __b_wait_for_ack(bootloader_order_t order){
 	if (__b_wait_until_fdcan_message_received() != BOOTLOADER_OK) {
 		return BOOTLOADER_ERROR;
 	}
+
 	fdcan_packet_t packet;
 	fdcan_read(&packet);
 	if (packet.identifier != order) {

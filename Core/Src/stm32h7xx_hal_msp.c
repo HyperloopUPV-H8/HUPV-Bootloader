@@ -159,6 +159,50 @@ void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef* hfdcan)
 
 }
 
+/**
+* @brief TIM_Base MSP Initialization
+* This function configures the hardware resources used in this example
+* @param htim_base: TIM_Base handle pointer
+* @retval None
+*/
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
+{
+  if(htim_base->Instance==TIM23)
+  {
+  /* USER CODE BEGIN TIM23_MspInit 0 */
+
+  /* USER CODE END TIM23_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_TIM23_CLK_ENABLE();
+  /* USER CODE BEGIN TIM23_MspInit 1 */
+
+  /* USER CODE END TIM23_MspInit 1 */
+  }
+
+}
+
+/**
+* @brief TIM_Base MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param htim_base: TIM_Base handle pointer
+* @retval None
+*/
+void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
+{
+  if(htim_base->Instance==TIM23)
+  {
+  /* USER CODE BEGIN TIM23_MspDeInit 0 */
+
+  /* USER CODE END TIM23_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_TIM23_CLK_DISABLE();
+  /* USER CODE BEGIN TIM23_MspDeInit 1 */
+
+  /* USER CODE END TIM23_MspDeInit 1 */
+  }
+
+}
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

@@ -133,7 +133,7 @@ void const __b_write_memory(fdcan_packet_t* packet){
 	uint32_t buffer[SECTOR_SIZE_IN_32BITS_WORDS];
 	sector_t sector;
 	uint32_t address;
-	uint16_t i;
+	uint16_t i, counter = 1;
 
 	sector = packet->data[0];
 	address = flash_get_sector_starting_address(sector);
@@ -144,6 +144,11 @@ void const __b_write_memory(fdcan_packet_t* packet){
 	}
 
 	__b_send_ack(packet);
+
+	if (__b_wait_for_ack(packet->identifier) != BOOTLOADER_OK) {
+		__b_send_nack(packet);
+		return;
+	}
 
 	for (i = 0; i < SECTOR_SIZE_IN_32BITS_WORDS; i +=16) {
 		__b_wait_until_fdcan_message_received();
@@ -159,6 +164,18 @@ void const __b_write_memory(fdcan_packet_t* packet){
 		}
 
 		__b_data_copy_from_packet(packet, ((uint8_t*)&(buffer[i])));
+
+		if (counter >= BOOTLOADER_BLOCK_SIZE) {
+			__b_send_ack(packet);
+			if (__b_wait_for_ack(packet->identifier) != BOOTLOADER_OK) {
+				__b_send_nack(packet);
+				return;
+			}
+			counter = 1;
+		}else{
+			counter++;
+		}
+
 	}
 
 	flash_write(address, buffer, SECTOR_SIZE_IN_32BITS_WORDS);

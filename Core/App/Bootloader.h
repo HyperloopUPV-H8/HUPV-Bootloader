@@ -12,7 +12,12 @@
 #include "Flash.h"
 #include "FDCAN.h"
 
-#define BOOTLOADER_VERSION (0x02)
+#define BOOTLOADER_VERSION 		(0x03)
+
+#define BOOTLOADER_BLOCK_SIZE 	((uint8_t)8U)
+
+#define BOOTLOADER_MAX_TIMEOUT  ((uint32_t) 2000)
+
 
 /****************************************************************************************
 * Type definitions
@@ -24,6 +29,11 @@ typedef enum{
 	ERASE_MEMORY_ORDER = 0x20,
 	GO_ORDER = 0x10
 }bootloader_order_t;
+
+typedef enum{
+	BOOTLOADER_OK,
+	BOOTLOADER_ERROR,
+}bootloader_error_t;
 
 /****************************************************************************************
 * Function prototypes

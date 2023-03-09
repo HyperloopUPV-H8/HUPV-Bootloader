@@ -43,6 +43,8 @@
 
 FDCAN_HandleTypeDef hfdcan1;
 
+TIM_HandleTypeDef htim23;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -51,6 +53,7 @@ FDCAN_HandleTypeDef hfdcan1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_FDCAN1_Init(void);
+static void MX_TIM23_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -88,7 +91,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FDCAN1_Init();
+  MX_TIM23_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start(&htim23);
   HAL_FDCAN_Start(&hfdcan1);
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
@@ -218,6 +223,51 @@ static void MX_FDCAN1_Init(void)
   /* USER CODE BEGIN FDCAN1_Init 2 */
 
   /* USER CODE END FDCAN1_Init 2 */
+
+}
+
+/**
+  * @brief TIM23 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM23_Init(void)
+{
+
+  /* USER CODE BEGIN TIM23_Init 0 */
+
+  /* USER CODE END TIM23_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM23_Init 1 */
+
+  /* USER CODE END TIM23_Init 1 */
+  htim23.Instance = TIM23;
+  htim23.Init.Prescaler = 55000;
+  htim23.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim23.Init.Period = 4294967295;
+  htim23.Init.ClockDivision = TIM_CLOCKDIVISION_DIV2;
+  htim23.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim23) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim23, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim23, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM23_Init 2 */
+
+  /* USER CODE END TIM23_Init 2 */
 
 }
 

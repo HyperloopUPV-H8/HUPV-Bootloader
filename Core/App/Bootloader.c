@@ -14,12 +14,15 @@
 #define BOOTLOADER_NACK (0x1f)
 
 
+extern TIM_HandleTypeDef htim23;
+
 /****************************************************************************************
 * Function prototypes
 ****************************************************************************************/
-void const __b_wait_until_fdcan_message_received(void);
+bootloader_error_t const __b_wait_until_fdcan_message_received(void);
 void const __b_clean_fdcan_packet_data(fdcan_packet_t* packet);
 void const __b_clean_fdcan_packet_all(fdcan_packet_t* packet);
+bootloader_error_t const __b_wait_for_ack(bootloader_order_t order);
 void const __b_send_ack(fdcan_packet_t* packet);
 void const __b_send_nack(fdcan_packet_t* packet);
 void const __b_data_copy_to_packet(fdcan_packet_t* packet, uint8_t* data);
@@ -36,7 +39,10 @@ void bootloader_start(){
 	__b_clean_fdcan_packet_all(&packet);
 
 	while(1){
-		__b_wait_until_fdcan_message_received();
+		if (__b_wait_until_fdcan_message_received() != BOOTLOADER_OK) {
+			continue;
+		}
+
 		fdcan_read(&packet);
 
 		switch (packet.identifier) {
@@ -80,7 +86,7 @@ void const __b_read_memory(fdcan_packet_t* packet){
 	uint32_t buffer[SECTOR_SIZE_IN_32BITS_WORDS];
 	sector_t sector;
 	uint32_t address;
-	uint16_t i;
+	uint16_t i, counter = 0;
 
 	sector = packet->data[0];
 	address = flash_get_sector_starting_address(sector);
@@ -97,13 +103,27 @@ void const __b_read_memory(fdcan_packet_t* packet){
 
 	__b_send_ack(packet);
 
+	if (__b_wait_for_ack(packet->identifier) != BOOTLOADER_OK) {
+		__b_send_nack(packet);
+		return;
+	}
+
 	for (i = 0; i < SECTOR_SIZE_IN_32BITS_WORDS; i +=16) {
 		__b_data_copy_to_packet(packet, ((uint8_t*)&(buffer[i])));
 		if (fdcan_transmit(packet) != FDCAN_OK) {
 			__b_send_nack(packet);
 			return;
 		}
-		HAL_Delay(1);
+		if (counter >= BOOTLOADER_BLOCK_SIZE) {
+			__b_send_ack(packet);
+			if (__b_wait_for_ack(packet->identifier) != BOOTLOADER_OK) {
+				__b_send_nack(packet);
+				return;
+			}
+			counter = 0;
+		}
+		counter++;
+		//HAL_Delay(1);
 	}
 
 	__b_send_ack(packet);
@@ -113,7 +133,7 @@ void const __b_write_memory(fdcan_packet_t* packet){
 	uint32_t buffer[SECTOR_SIZE_IN_32BITS_WORDS];
 	sector_t sector;
 	uint32_t address;
-	uint16_t i;
+	uint16_t i, counter = 1;
 
 	sector = packet->data[0];
 	address = flash_get_sector_starting_address(sector);
@@ -124,6 +144,11 @@ void const __b_write_memory(fdcan_packet_t* packet){
 	}
 
 	__b_send_ack(packet);
+
+	if (__b_wait_for_ack(packet->identifier) != BOOTLOADER_OK) {
+		__b_send_nack(packet);
+		return;
+	}
 
 	for (i = 0; i < SECTOR_SIZE_IN_32BITS_WORDS; i +=16) {
 		__b_wait_until_fdcan_message_received();
@@ -139,6 +164,18 @@ void const __b_write_memory(fdcan_packet_t* packet){
 		}
 
 		__b_data_copy_from_packet(packet, ((uint8_t*)&(buffer[i])));
+
+		if (counter >= BOOTLOADER_BLOCK_SIZE) {
+			__b_send_ack(packet);
+			if (__b_wait_for_ack(packet->identifier) != BOOTLOADER_OK) {
+				__b_send_nack(packet);
+				return;
+			}
+			counter = 1;
+		}else{
+			counter++;
+		}
+
 	}
 
 	flash_write(address, buffer, SECTOR_SIZE_IN_32BITS_WORDS);
@@ -186,6 +223,23 @@ void const __b_data_copy_from_packet(fdcan_packet_t* packet, uint8_t* data){
 	}
 }
 
+bootloader_error_t const __b_wait_for_ack(bootloader_order_t order){
+	if (__b_wait_until_fdcan_message_received() != BOOTLOADER_OK) {
+		return BOOTLOADER_ERROR;
+	}
+
+	fdcan_packet_t packet;
+	fdcan_read(&packet);
+	if (packet.identifier != order) {
+		return BOOTLOADER_ERROR;
+	}
+
+	if (packet.data[0] != BOOTLOADER_ACK) {
+		return BOOTLOADER_ERROR;
+	}
+
+	return BOOTLOADER_OK;
+}
 
 void const __b_send_ack(fdcan_packet_t* packet){
 	__b_clean_fdcan_packet_data(packet);
@@ -224,6 +278,13 @@ void const __b_clean_fdcan_packet_all(fdcan_packet_t* packet){
 }
 
 
-void const __b_wait_until_fdcan_message_received(void){
-	while(!fdcan_test()){}
+bootloader_error_t const __b_wait_until_fdcan_message_received(void){
+	htim23.Instance->CNT = 0;
+	while(!fdcan_test()){
+		if (htim23.Instance->CNT > BOOTLOADER_MAX_TIMEOUT * 10) {
+			return BOOTLOADER_ERROR;
+		}
+	}
+
+	return BOOTLOADER_OK;
 }

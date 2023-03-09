@@ -79,8 +79,8 @@ all: main-build
 main-build: HUPV-Bootloader.elf secondary-outputs
 
 # Tool invocations
-HUPV-Bootloader.elf HUPV-Bootloader.map: $(OBJS) $(USER_OBJS) C:\Users\pablo\Desktop\Hyperloop\ UPV\H8\TESTING\HUPV-Bootloader\STM32H723ZGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "HUPV-Bootloader.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\pablo\Desktop\Hyperloop UPV\H8\TESTING\HUPV-Bootloader\STM32H723ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HUPV-Bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+HUPV-Bootloader.elf HUPV-Bootloader.map: $(OBJS) $(USER_OBJS) /home/predawnia/Desktop/Hyperloop\ UPV/H8/HUPV-Bootloader/STM32H723ZGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "HUPV-Bootloader.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/home/predawnia/Desktop/Hyperloop UPV/H8/HUPV-Bootloader/STM32H723ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HUPV-Bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

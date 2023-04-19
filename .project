@@ -3,6 +3,7 @@
 	<name>HUPV-Bootloader</name>
 	<comment></comment>
 	<projects>
+		<project>HUPV-Bootloader</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

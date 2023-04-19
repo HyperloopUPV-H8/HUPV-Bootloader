@@ -12,7 +12,7 @@
 #include "Flash.h"
 #include "FDCAN.h"
 
-#define BOOTLOADER_VERSION 		(0x03)
+#define BOOTLOADER_VERSION 		(0x04)
 
 #define BOOTLOADER_BLOCK_SIZE 	((uint8_t)8U)
 

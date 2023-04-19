@@ -191,6 +191,7 @@ void const __b_erase_memory(fdcan_packet_t* packet){
 
 	if (sector1 > FLASH_MAX_SECTOR || sector2 > FLASH_MAX_SECTOR) {
 		__b_send_nack(packet);
+		return;
 	}
 
 	__b_send_ack(packet);
@@ -198,6 +199,7 @@ void const __b_erase_memory(fdcan_packet_t* packet){
 
 	if(flash_erase(sector1, sector2) != FLASH_OK){
 		__b_send_nack(packet);
+		return;
 	}
 
 	__b_send_ack(packet);

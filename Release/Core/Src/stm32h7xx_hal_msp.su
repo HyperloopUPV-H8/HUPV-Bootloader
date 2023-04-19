@@ -1,0 +1,5 @@
+../Core/Src/stm32h7xx_hal_msp.c:63:6:HAL_MspInit	8	static
+../Core/Src/stm32h7xx_hal_msp.c:84:6:HAL_FDCAN_MspInit	216	static
+../Core/Src/stm32h7xx_hal_msp.c:139:6:HAL_FDCAN_MspDeInit	0	static
+../Core/Src/stm32h7xx_hal_msp.c:168:6:HAL_TIM_Base_MspInit	8	static
+../Core/Src/stm32h7xx_hal_msp.c:190:6:HAL_TIM_Base_MspDeInit	0	static

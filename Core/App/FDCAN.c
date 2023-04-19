@@ -31,7 +31,7 @@ fdcan_error_t const fdcan_transmit(fdcan_packet_t* packet){
 }
 
 fdcan_error_t const fdcan_read(fdcan_packet_t* packet){
-	if(!fdcan_test) {
+	if(!fdcan_test()) {
 		return FDCAN_EMPTY;
 	}
 

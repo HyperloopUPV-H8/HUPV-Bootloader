@@ -68,6 +68,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 HUPV-Bootloader.list \
 
+OBJCOPY_BIN += \
+HUPV-Bootloader.bin \
+
 
 # All Target
 all: main-build
@@ -91,12 +94,17 @@ HUPV-Bootloader.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+HUPV-Bootloader.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "HUPV-Bootloader.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) HUPV-Bootloader.elf HUPV-Bootloader.list HUPV-Bootloader.map default.size.stdout
+	-$(RM) HUPV-Bootloader.bin HUPV-Bootloader.elf HUPV-Bootloader.list HUPV-Bootloader.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

@@ -90,7 +90,7 @@ Disassembly of section .text:
  80e0348:	4620      	mov	r0, r4
  80e034a:	70a3      	strb	r3, [r4, #2]
  80e034c:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
- 80e0350:	f000 b928 	b.w	80e05a4 <fdcan_transmit>
+ 80e0350:	f000 b92a 	b.w	80e05a8 <fdcan_transmit>
 
 080e0354 <__b_send_nack>:
  80e0354:	b510      	push	{r4, lr}
@@ -100,16 +100,16 @@ Disassembly of section .text:
  80e035e:	4620      	mov	r0, r4
  80e0360:	70a3      	strb	r3, [r4, #2]
  80e0362:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
- 80e0366:	f000 b91d 	b.w	80e05a4 <fdcan_transmit>
+ 80e0366:	f000 b91f 	b.w	80e05a8 <fdcan_transmit>
 
 080e036a <__b_get_version>:
  80e036a:	b510      	push	{r4, lr}
  80e036c:	4604      	mov	r4, r0
  80e036e:	f7ff ffe6 	bl	80e033e <__b_send_ack>
- 80e0372:	2303      	movs	r3, #3
+ 80e0372:	2305      	movs	r3, #5
  80e0374:	4620      	mov	r0, r4
  80e0376:	70a3      	strb	r3, [r4, #2]
- 80e0378:	f000 f914 	bl	80e05a4 <fdcan_transmit>
+ 80e0378:	f000 f916 	bl	80e05a8 <fdcan_transmit>
  80e037c:	b120      	cbz	r0, 80e0388 <__b_get_version+0x1e>
  80e037e:	4620      	mov	r0, r4
  80e0380:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
@@ -120,20 +120,20 @@ Disassembly of section .text:
 
 080e0392 <__b_erase_memory>:
  80e0392:	b570      	push	{r4, r5, r6, lr}
- 80e0394:	7885      	ldrb	r5, [r0, #2]
+ 80e0394:	7886      	ldrb	r6, [r0, #2]
  80e0396:	4604      	mov	r4, r0
- 80e0398:	78c6      	ldrb	r6, [r0, #3]
- 80e039a:	2d06      	cmp	r5, #6
+ 80e0398:	78c5      	ldrb	r5, [r0, #3]
+ 80e039a:	42ae      	cmp	r6, r5
  80e039c:	d801      	bhi.n	80e03a2 <__b_erase_memory+0x10>
- 80e039e:	2e06      	cmp	r6, #6
+ 80e039e:	2d05      	cmp	r5, #5
  80e03a0:	d904      	bls.n	80e03ac <__b_erase_memory+0x1a>
  80e03a2:	4620      	mov	r0, r4
  80e03a4:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
  80e03a8:	f7ff bfd4 	b.w	80e0354 <__b_send_nack>
  80e03ac:	f7ff ffc7 	bl	80e033e <__b_send_ack>
- 80e03b0:	4631      	mov	r1, r6
- 80e03b2:	4628      	mov	r0, r5
- 80e03b4:	f000 f954 	bl	80e0660 <flash_erase>
+ 80e03b0:	4629      	mov	r1, r5
+ 80e03b2:	4630      	mov	r0, r6
+ 80e03b4:	f000 f956 	bl	80e0664 <flash_erase>
  80e03b8:	2800      	cmp	r0, #0
  80e03ba:	d1f2      	bne.n	80e03a2 <__b_erase_memory+0x10>
  80e03bc:	4620      	mov	r0, r4
@@ -159,7 +159,7 @@ Disassembly of section .text:
  80e03e2:	f644 6520 	movw	r5, #20000	; 0x4e20
  80e03e6:	6823      	ldr	r3, [r4, #0]
  80e03e8:	625a      	str	r2, [r3, #36]	; 0x24
- 80e03ea:	f000 f8fd 	bl	80e05e8 <fdcan_test>
+ 80e03ea:	f000 f8ff 	bl	80e05ec <fdcan_test>
  80e03ee:	b108      	cbz	r0, 80e03f4 <__b_wait_until_fdcan_message_received+0x18>
  80e03f0:	2000      	movs	r0, #0
  80e03f2:	bd38      	pop	{r3, r4, r5, pc}
@@ -178,7 +178,7 @@ Disassembly of section .text:
  80e040a:	f7ff ffe7 	bl	80e03dc <__b_wait_until_fdcan_message_received>
  80e040e:	b968      	cbnz	r0, 80e042c <__b_wait_for_ack+0x28>
  80e0410:	a801      	add	r0, sp, #4
- 80e0412:	f000 f8f5 	bl	80e0600 <fdcan_read>
+ 80e0412:	f000 f8f7 	bl	80e0604 <fdcan_read>
  80e0416:	f8bd 3004 	ldrh.w	r3, [sp, #4]
  80e041a:	42a3      	cmp	r3, r4
  80e041c:	d106      	bne.n	80e042c <__b_wait_for_ack+0x28>
@@ -193,266 +193,266 @@ Disassembly of section .text:
 
 080e0430 <__b_read_memory>:
  80e0430:	b570      	push	{r4, r5, r6, lr}
- 80e0432:	4605      	mov	r5, r0
+ 80e0432:	7884      	ldrb	r4, [r0, #2]
  80e0434:	f5ad 3d00 	sub.w	sp, sp, #131072	; 0x20000
- 80e0438:	7880      	ldrb	r0, [r0, #2]
- 80e043a:	f000 f972 	bl	80e0722 <flash_get_sector_starting_address>
- 80e043e:	1c42      	adds	r2, r0, #1
- 80e0440:	d001      	beq.n	80e0446 <__b_read_memory+0x16>
- 80e0442:	2807      	cmp	r0, #7
- 80e0444:	d105      	bne.n	80e0452 <__b_read_memory+0x22>
- 80e0446:	4628      	mov	r0, r5
- 80e0448:	f7ff ff84 	bl	80e0354 <__b_send_nack>
- 80e044c:	f50d 3d00 	add.w	sp, sp, #131072	; 0x20000
- 80e0450:	bd70      	pop	{r4, r5, r6, pc}
- 80e0452:	f44f 4200 	mov.w	r2, #32768	; 0x8000
- 80e0456:	4669      	mov	r1, sp
- 80e0458:	f000 f8e8 	bl	80e062c <flash_read>
- 80e045c:	2800      	cmp	r0, #0
- 80e045e:	d1f2      	bne.n	80e0446 <__b_read_memory+0x16>
- 80e0460:	4628      	mov	r0, r5
- 80e0462:	f7ff ff6c 	bl	80e033e <__b_send_ack>
- 80e0466:	7828      	ldrb	r0, [r5, #0]
- 80e0468:	f7ff ffcc 	bl	80e0404 <__b_wait_for_ack>
- 80e046c:	4604      	mov	r4, r0
- 80e046e:	2800      	cmp	r0, #0
- 80e0470:	d1e9      	bne.n	80e0446 <__b_read_memory+0x16>
- 80e0472:	4606      	mov	r6, r0
- 80e0474:	4628      	mov	r0, r5
- 80e0476:	eb0d 0186 	add.w	r1, sp, r6, lsl #2
- 80e047a:	f7ff ff47 	bl	80e030c <__b_data_copy_to_packet>
- 80e047e:	4628      	mov	r0, r5
- 80e0480:	f000 f890 	bl	80e05a4 <fdcan_transmit>
- 80e0484:	2800      	cmp	r0, #0
- 80e0486:	d1de      	bne.n	80e0446 <__b_read_memory+0x16>
- 80e0488:	2c07      	cmp	r4, #7
- 80e048a:	d908      	bls.n	80e049e <__b_read_memory+0x6e>
- 80e048c:	4628      	mov	r0, r5
- 80e048e:	f7ff ff56 	bl	80e033e <__b_send_ack>
- 80e0492:	7828      	ldrb	r0, [r5, #0]
- 80e0494:	f7ff ffb6 	bl	80e0404 <__b_wait_for_ack>
- 80e0498:	4604      	mov	r4, r0
- 80e049a:	2800      	cmp	r0, #0
- 80e049c:	d1d3      	bne.n	80e0446 <__b_read_memory+0x16>
- 80e049e:	f106 0310 	add.w	r3, r6, #16
- 80e04a2:	3401      	adds	r4, #1
- 80e04a4:	b29e      	uxth	r6, r3
- 80e04a6:	041b      	lsls	r3, r3, #16
- 80e04a8:	b2a4      	uxth	r4, r4
- 80e04aa:	d5e3      	bpl.n	80e0474 <__b_read_memory+0x44>
- 80e04ac:	4628      	mov	r0, r5
- 80e04ae:	f7ff ff46 	bl	80e033e <__b_send_ack>
- 80e04b2:	e7cb      	b.n	80e044c <__b_read_memory+0x1c>
+ 80e0438:	4605      	mov	r5, r0
+ 80e043a:	4620      	mov	r0, r4
+ 80e043c:	f000 f971 	bl	80e0722 <flash_get_sector_starting_address>
+ 80e0440:	1c42      	adds	r2, r0, #1
+ 80e0442:	d001      	beq.n	80e0448 <__b_read_memory+0x18>
+ 80e0444:	2c06      	cmp	r4, #6
+ 80e0446:	d905      	bls.n	80e0454 <__b_read_memory+0x24>
+ 80e0448:	4628      	mov	r0, r5
+ 80e044a:	f7ff ff83 	bl	80e0354 <__b_send_nack>
+ 80e044e:	f50d 3d00 	add.w	sp, sp, #131072	; 0x20000
+ 80e0452:	bd70      	pop	{r4, r5, r6, pc}
+ 80e0454:	f44f 4200 	mov.w	r2, #32768	; 0x8000
+ 80e0458:	4669      	mov	r1, sp
+ 80e045a:	f000 f8e9 	bl	80e0630 <flash_read>
+ 80e045e:	2800      	cmp	r0, #0
+ 80e0460:	d1f2      	bne.n	80e0448 <__b_read_memory+0x18>
+ 80e0462:	4628      	mov	r0, r5
+ 80e0464:	f7ff ff6b 	bl	80e033e <__b_send_ack>
+ 80e0468:	7828      	ldrb	r0, [r5, #0]
+ 80e046a:	f7ff ffcb 	bl	80e0404 <__b_wait_for_ack>
+ 80e046e:	4604      	mov	r4, r0
+ 80e0470:	2800      	cmp	r0, #0
+ 80e0472:	d1e9      	bne.n	80e0448 <__b_read_memory+0x18>
+ 80e0474:	4606      	mov	r6, r0
+ 80e0476:	4628      	mov	r0, r5
+ 80e0478:	eb0d 0186 	add.w	r1, sp, r6, lsl #2
+ 80e047c:	f7ff ff46 	bl	80e030c <__b_data_copy_to_packet>
+ 80e0480:	4628      	mov	r0, r5
+ 80e0482:	f000 f891 	bl	80e05a8 <fdcan_transmit>
+ 80e0486:	2800      	cmp	r0, #0
+ 80e0488:	d1de      	bne.n	80e0448 <__b_read_memory+0x18>
+ 80e048a:	2c07      	cmp	r4, #7
+ 80e048c:	d908      	bls.n	80e04a0 <__b_read_memory+0x70>
+ 80e048e:	4628      	mov	r0, r5
+ 80e0490:	f7ff ff55 	bl	80e033e <__b_send_ack>
+ 80e0494:	7828      	ldrb	r0, [r5, #0]
+ 80e0496:	f7ff ffb5 	bl	80e0404 <__b_wait_for_ack>
+ 80e049a:	4604      	mov	r4, r0
+ 80e049c:	2800      	cmp	r0, #0
+ 80e049e:	d1d3      	bne.n	80e0448 <__b_read_memory+0x18>
+ 80e04a0:	f106 0310 	add.w	r3, r6, #16
+ 80e04a4:	3401      	adds	r4, #1
+ 80e04a6:	b29e      	uxth	r6, r3
+ 80e04a8:	041b      	lsls	r3, r3, #16
+ 80e04aa:	b2a4      	uxth	r4, r4
+ 80e04ac:	d5e3      	bpl.n	80e0476 <__b_read_memory+0x46>
+ 80e04ae:	4628      	mov	r0, r5
+ 80e04b0:	f7ff ff45 	bl	80e033e <__b_send_ack>
+ 80e04b4:	e7cb      	b.n	80e044e <__b_read_memory+0x1e>
 
-080e04b4 <__b_write_memory>:
- 80e04b4:	b5f0      	push	{r4, r5, r6, r7, lr}
- 80e04b6:	f5ad 3d00 	sub.w	sp, sp, #131072	; 0x20000
- 80e04ba:	4604      	mov	r4, r0
- 80e04bc:	7880      	ldrb	r0, [r0, #2]
- 80e04be:	b081      	sub	sp, #4
- 80e04c0:	f000 f92f 	bl	80e0722 <flash_get_sector_starting_address>
- 80e04c4:	1c42      	adds	r2, r0, #1
- 80e04c6:	4607      	mov	r7, r0
- 80e04c8:	d001      	beq.n	80e04ce <__b_write_memory+0x1a>
- 80e04ca:	2807      	cmp	r0, #7
- 80e04cc:	d106      	bne.n	80e04dc <__b_write_memory+0x28>
- 80e04ce:	4620      	mov	r0, r4
- 80e04d0:	f7ff ff40 	bl	80e0354 <__b_send_nack>
- 80e04d4:	f50d 3d00 	add.w	sp, sp, #131072	; 0x20000
- 80e04d8:	b001      	add	sp, #4
- 80e04da:	bdf0      	pop	{r4, r5, r6, r7, pc}
- 80e04dc:	4620      	mov	r0, r4
- 80e04de:	f7ff ff2e 	bl	80e033e <__b_send_ack>
- 80e04e2:	7820      	ldrb	r0, [r4, #0]
- 80e04e4:	f7ff ff8e 	bl	80e0404 <__b_wait_for_ack>
- 80e04e8:	4605      	mov	r5, r0
- 80e04ea:	2800      	cmp	r0, #0
- 80e04ec:	d1ef      	bne.n	80e04ce <__b_write_memory+0x1a>
- 80e04ee:	2601      	movs	r6, #1
- 80e04f0:	f7ff ff74 	bl	80e03dc <__b_wait_until_fdcan_message_received>
- 80e04f4:	4620      	mov	r0, r4
- 80e04f6:	f000 f883 	bl	80e0600 <fdcan_read>
- 80e04fa:	2800      	cmp	r0, #0
- 80e04fc:	d1e7      	bne.n	80e04ce <__b_write_memory+0x1a>
- 80e04fe:	8823      	ldrh	r3, [r4, #0]
- 80e0500:	2b30      	cmp	r3, #48	; 0x30
- 80e0502:	d002      	beq.n	80e050a <__b_write_memory+0x56>
- 80e0504:	2330      	movs	r3, #48	; 0x30
- 80e0506:	8023      	strh	r3, [r4, #0]
- 80e0508:	e7e1      	b.n	80e04ce <__b_write_memory+0x1a>
- 80e050a:	eb0d 0185 	add.w	r1, sp, r5, lsl #2
- 80e050e:	4620      	mov	r0, r4
- 80e0510:	f7ff ff06 	bl	80e0320 <__b_data_copy_from_packet>
- 80e0514:	2e07      	cmp	r6, #7
- 80e0516:	d917      	bls.n	80e0548 <__b_write_memory+0x94>
- 80e0518:	4620      	mov	r0, r4
- 80e051a:	f7ff ff10 	bl	80e033e <__b_send_ack>
- 80e051e:	7820      	ldrb	r0, [r4, #0]
- 80e0520:	f7ff ff70 	bl	80e0404 <__b_wait_for_ack>
- 80e0524:	2800      	cmp	r0, #0
- 80e0526:	d1d2      	bne.n	80e04ce <__b_write_memory+0x1a>
- 80e0528:	2601      	movs	r6, #1
- 80e052a:	f105 0310 	add.w	r3, r5, #16
- 80e052e:	b29d      	uxth	r5, r3
- 80e0530:	041b      	lsls	r3, r3, #16
- 80e0532:	d5dd      	bpl.n	80e04f0 <__b_write_memory+0x3c>
- 80e0534:	f44f 4200 	mov.w	r2, #32768	; 0x8000
- 80e0538:	4669      	mov	r1, sp
- 80e053a:	4638      	mov	r0, r7
- 80e053c:	f000 f8fa 	bl	80e0734 <flash_write>
- 80e0540:	4620      	mov	r0, r4
- 80e0542:	f7ff fefc 	bl	80e033e <__b_send_ack>
- 80e0546:	e7c5      	b.n	80e04d4 <__b_write_memory+0x20>
- 80e0548:	3601      	adds	r6, #1
- 80e054a:	b2b6      	uxth	r6, r6
- 80e054c:	e7ed      	b.n	80e052a <__b_write_memory+0x76>
+080e04b6 <__b_write_memory>:
+ 80e04b6:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 80e04b8:	7885      	ldrb	r5, [r0, #2]
+ 80e04ba:	f5ad 3d00 	sub.w	sp, sp, #131072	; 0x20000
+ 80e04be:	4604      	mov	r4, r0
+ 80e04c0:	b081      	sub	sp, #4
+ 80e04c2:	4628      	mov	r0, r5
+ 80e04c4:	f000 f92d 	bl	80e0722 <flash_get_sector_starting_address>
+ 80e04c8:	1c42      	adds	r2, r0, #1
+ 80e04ca:	4607      	mov	r7, r0
+ 80e04cc:	d001      	beq.n	80e04d2 <__b_write_memory+0x1c>
+ 80e04ce:	2d05      	cmp	r5, #5
+ 80e04d0:	d906      	bls.n	80e04e0 <__b_write_memory+0x2a>
+ 80e04d2:	4620      	mov	r0, r4
+ 80e04d4:	f7ff ff3e 	bl	80e0354 <__b_send_nack>
+ 80e04d8:	f50d 3d00 	add.w	sp, sp, #131072	; 0x20000
+ 80e04dc:	b001      	add	sp, #4
+ 80e04de:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 80e04e0:	4620      	mov	r0, r4
+ 80e04e2:	f7ff ff2c 	bl	80e033e <__b_send_ack>
+ 80e04e6:	7820      	ldrb	r0, [r4, #0]
+ 80e04e8:	f7ff ff8c 	bl	80e0404 <__b_wait_for_ack>
+ 80e04ec:	4605      	mov	r5, r0
+ 80e04ee:	2800      	cmp	r0, #0
+ 80e04f0:	d1ef      	bne.n	80e04d2 <__b_write_memory+0x1c>
+ 80e04f2:	2601      	movs	r6, #1
+ 80e04f4:	f7ff ff72 	bl	80e03dc <__b_wait_until_fdcan_message_received>
+ 80e04f8:	4620      	mov	r0, r4
+ 80e04fa:	f000 f883 	bl	80e0604 <fdcan_read>
+ 80e04fe:	2800      	cmp	r0, #0
+ 80e0500:	d1e7      	bne.n	80e04d2 <__b_write_memory+0x1c>
+ 80e0502:	8823      	ldrh	r3, [r4, #0]
+ 80e0504:	2b30      	cmp	r3, #48	; 0x30
+ 80e0506:	d002      	beq.n	80e050e <__b_write_memory+0x58>
+ 80e0508:	2330      	movs	r3, #48	; 0x30
+ 80e050a:	8023      	strh	r3, [r4, #0]
+ 80e050c:	e7e1      	b.n	80e04d2 <__b_write_memory+0x1c>
+ 80e050e:	eb0d 0185 	add.w	r1, sp, r5, lsl #2
+ 80e0512:	4620      	mov	r0, r4
+ 80e0514:	f7ff ff04 	bl	80e0320 <__b_data_copy_from_packet>
+ 80e0518:	2e07      	cmp	r6, #7
+ 80e051a:	d917      	bls.n	80e054c <__b_write_memory+0x96>
+ 80e051c:	4620      	mov	r0, r4
+ 80e051e:	f7ff ff0e 	bl	80e033e <__b_send_ack>
+ 80e0522:	7820      	ldrb	r0, [r4, #0]
+ 80e0524:	f7ff ff6e 	bl	80e0404 <__b_wait_for_ack>
+ 80e0528:	2800      	cmp	r0, #0
+ 80e052a:	d1d2      	bne.n	80e04d2 <__b_write_memory+0x1c>
+ 80e052c:	2601      	movs	r6, #1
+ 80e052e:	f105 0310 	add.w	r3, r5, #16
+ 80e0532:	b29d      	uxth	r5, r3
+ 80e0534:	041b      	lsls	r3, r3, #16
+ 80e0536:	d5dd      	bpl.n	80e04f4 <__b_write_memory+0x3e>
+ 80e0538:	f44f 4200 	mov.w	r2, #32768	; 0x8000
+ 80e053c:	4669      	mov	r1, sp
+ 80e053e:	4638      	mov	r0, r7
+ 80e0540:	f000 f8f8 	bl	80e0734 <flash_write>
+ 80e0544:	4620      	mov	r0, r4
+ 80e0546:	f7ff fefa 	bl	80e033e <__b_send_ack>
+ 80e054a:	e7c5      	b.n	80e04d8 <__b_write_memory+0x22>
+ 80e054c:	3601      	adds	r6, #1
+ 80e054e:	b2b6      	uxth	r6, r6
+ 80e0550:	e7ed      	b.n	80e052e <__b_write_memory+0x78>
 
-080e054e <bootloader_start>:
- 80e054e:	b500      	push	{lr}
- 80e0550:	b093      	sub	sp, #76	; 0x4c
- 80e0552:	a801      	add	r0, sp, #4
- 80e0554:	f7ff ff37 	bl	80e03c6 <__b_clean_fdcan_packet_all>
- 80e0558:	f7ff ff40 	bl	80e03dc <__b_wait_until_fdcan_message_received>
- 80e055c:	2800      	cmp	r0, #0
- 80e055e:	d1fb      	bne.n	80e0558 <bootloader_start+0xa>
- 80e0560:	a801      	add	r0, sp, #4
- 80e0562:	f000 f84d 	bl	80e0600 <fdcan_read>
- 80e0566:	f8bd 3004 	ldrh.w	r3, [sp, #4]
- 80e056a:	2b40      	cmp	r3, #64	; 0x40
- 80e056c:	d00e      	beq.n	80e058c <bootloader_start+0x3e>
- 80e056e:	d807      	bhi.n	80e0580 <bootloader_start+0x32>
- 80e0570:	2b20      	cmp	r3, #32
- 80e0572:	d013      	beq.n	80e059c <bootloader_start+0x4e>
- 80e0574:	2b30      	cmp	r3, #48	; 0x30
- 80e0576:	d00d      	beq.n	80e0594 <bootloader_start+0x46>
- 80e0578:	a801      	add	r0, sp, #4
- 80e057a:	f7ff feeb 	bl	80e0354 <__b_send_nack>
- 80e057e:	e7e8      	b.n	80e0552 <bootloader_start+0x4>
- 80e0580:	2b50      	cmp	r3, #80	; 0x50
- 80e0582:	d1f9      	bne.n	80e0578 <bootloader_start+0x2a>
- 80e0584:	a801      	add	r0, sp, #4
- 80e0586:	f7ff fef0 	bl	80e036a <__b_get_version>
- 80e058a:	e7e2      	b.n	80e0552 <bootloader_start+0x4>
- 80e058c:	a801      	add	r0, sp, #4
- 80e058e:	f7ff ff4f 	bl	80e0430 <__b_read_memory>
- 80e0592:	e7de      	b.n	80e0552 <bootloader_start+0x4>
- 80e0594:	a801      	add	r0, sp, #4
- 80e0596:	f7ff ff8d 	bl	80e04b4 <__b_write_memory>
- 80e059a:	e7da      	b.n	80e0552 <bootloader_start+0x4>
- 80e059c:	a801      	add	r0, sp, #4
- 80e059e:	f7ff fef8 	bl	80e0392 <__b_erase_memory>
- 80e05a2:	e7d6      	b.n	80e0552 <bootloader_start+0x4>
+080e0552 <bootloader_start>:
+ 80e0552:	b500      	push	{lr}
+ 80e0554:	b093      	sub	sp, #76	; 0x4c
+ 80e0556:	a801      	add	r0, sp, #4
+ 80e0558:	f7ff ff35 	bl	80e03c6 <__b_clean_fdcan_packet_all>
+ 80e055c:	f7ff ff3e 	bl	80e03dc <__b_wait_until_fdcan_message_received>
+ 80e0560:	2800      	cmp	r0, #0
+ 80e0562:	d1fb      	bne.n	80e055c <bootloader_start+0xa>
+ 80e0564:	a801      	add	r0, sp, #4
+ 80e0566:	f000 f84d 	bl	80e0604 <fdcan_read>
+ 80e056a:	f8bd 3004 	ldrh.w	r3, [sp, #4]
+ 80e056e:	2b40      	cmp	r3, #64	; 0x40
+ 80e0570:	d00e      	beq.n	80e0590 <bootloader_start+0x3e>
+ 80e0572:	d807      	bhi.n	80e0584 <bootloader_start+0x32>
+ 80e0574:	2b20      	cmp	r3, #32
+ 80e0576:	d013      	beq.n	80e05a0 <bootloader_start+0x4e>
+ 80e0578:	2b30      	cmp	r3, #48	; 0x30
+ 80e057a:	d00d      	beq.n	80e0598 <bootloader_start+0x46>
+ 80e057c:	a801      	add	r0, sp, #4
+ 80e057e:	f7ff fee9 	bl	80e0354 <__b_send_nack>
+ 80e0582:	e7e8      	b.n	80e0556 <bootloader_start+0x4>
+ 80e0584:	2b50      	cmp	r3, #80	; 0x50
+ 80e0586:	d1f9      	bne.n	80e057c <bootloader_start+0x2a>
+ 80e0588:	a801      	add	r0, sp, #4
+ 80e058a:	f7ff feee 	bl	80e036a <__b_get_version>
+ 80e058e:	e7e2      	b.n	80e0556 <bootloader_start+0x4>
+ 80e0590:	a801      	add	r0, sp, #4
+ 80e0592:	f7ff ff4d 	bl	80e0430 <__b_read_memory>
+ 80e0596:	e7de      	b.n	80e0556 <bootloader_start+0x4>
+ 80e0598:	a801      	add	r0, sp, #4
+ 80e059a:	f7ff ff8c 	bl	80e04b6 <__b_write_memory>
+ 80e059e:	e7da      	b.n	80e0556 <bootloader_start+0x4>
+ 80e05a0:	a801      	add	r0, sp, #4
+ 80e05a2:	f7ff fef6 	bl	80e0392 <__b_erase_memory>
+ 80e05a6:	e7d6      	b.n	80e0556 <bootloader_start+0x4>
 
-080e05a4 <fdcan_transmit>:
- 80e05a4:	b508      	push	{r3, lr}
- 80e05a6:	490e      	ldr	r1, [pc, #56]	; (80e05e0 <fdcan_transmit+0x3c>)
- 80e05a8:	f44f 2270 	mov.w	r2, #983040	; 0xf0000
- 80e05ac:	f830 3b02 	ldrh.w	r3, [r0], #2
- 80e05b0:	f44f 1c80 	mov.w	ip, #1048576	; 0x100000
- 80e05b4:	600b      	str	r3, [r1, #0]
- 80e05b6:	2300      	movs	r3, #0
- 80e05b8:	e9c1 2303 	strd	r2, r3, [r1, #12]
- 80e05bc:	f44f 1200 	mov.w	r2, #2097152	; 0x200000
- 80e05c0:	e9c1 c205 	strd	ip, r2, [r1, #20]
- 80e05c4:	4602      	mov	r2, r0
- 80e05c6:	4807      	ldr	r0, [pc, #28]	; (80e05e4 <fdcan_transmit+0x40>)
- 80e05c8:	e9c1 3301 	strd	r3, r3, [r1, #4]
- 80e05cc:	e9c1 3307 	strd	r3, r3, [r1, #28]
- 80e05d0:	f000 fe41 	bl	80e1256 <HAL_FDCAN_AddMessageToTxFifoQ>
- 80e05d4:	3800      	subs	r0, #0
- 80e05d6:	bf18      	it	ne
- 80e05d8:	2001      	movne	r0, #1
- 80e05da:	4240      	negs	r0, r0
- 80e05dc:	b2c0      	uxtb	r0, r0
- 80e05de:	bd08      	pop	{r3, pc}
- 80e05e0:	24000054 	.word	0x24000054
- 80e05e4:	2400008c 	.word	0x2400008c
+080e05a8 <fdcan_transmit>:
+ 80e05a8:	b508      	push	{r3, lr}
+ 80e05aa:	490e      	ldr	r1, [pc, #56]	; (80e05e4 <fdcan_transmit+0x3c>)
+ 80e05ac:	f44f 2270 	mov.w	r2, #983040	; 0xf0000
+ 80e05b0:	f830 3b02 	ldrh.w	r3, [r0], #2
+ 80e05b4:	f44f 1c80 	mov.w	ip, #1048576	; 0x100000
+ 80e05b8:	600b      	str	r3, [r1, #0]
+ 80e05ba:	2300      	movs	r3, #0
+ 80e05bc:	e9c1 2303 	strd	r2, r3, [r1, #12]
+ 80e05c0:	f44f 1200 	mov.w	r2, #2097152	; 0x200000
+ 80e05c4:	e9c1 c205 	strd	ip, r2, [r1, #20]
+ 80e05c8:	4602      	mov	r2, r0
+ 80e05ca:	4807      	ldr	r0, [pc, #28]	; (80e05e8 <fdcan_transmit+0x40>)
+ 80e05cc:	e9c1 3301 	strd	r3, r3, [r1, #4]
+ 80e05d0:	e9c1 3307 	strd	r3, r3, [r1, #28]
+ 80e05d4:	f000 fe3f 	bl	80e1256 <HAL_FDCAN_AddMessageToTxFifoQ>
+ 80e05d8:	3800      	subs	r0, #0
+ 80e05da:	bf18      	it	ne
+ 80e05dc:	2001      	movne	r0, #1
+ 80e05de:	4240      	negs	r0, r0
+ 80e05e0:	b2c0      	uxtb	r0, r0
+ 80e05e2:	bd08      	pop	{r3, pc}
+ 80e05e4:	24000054 	.word	0x24000054
+ 80e05e8:	2400008c 	.word	0x2400008c
 
-080e05e8 <fdcan_test>:
- 80e05e8:	4b04      	ldr	r3, [pc, #16]	; (80e05fc <fdcan_test+0x14>)
- 80e05ea:	681b      	ldr	r3, [r3, #0]
- 80e05ec:	f8d3 00a4 	ldr.w	r0, [r3, #164]	; 0xa4
- 80e05f0:	f010 007f 	ands.w	r0, r0, #127	; 0x7f
- 80e05f4:	bf18      	it	ne
- 80e05f6:	2001      	movne	r0, #1
- 80e05f8:	4770      	bx	lr
- 80e05fa:	bf00      	nop
- 80e05fc:	2400008c 	.word	0x2400008c
+080e05ec <fdcan_test>:
+ 80e05ec:	4b04      	ldr	r3, [pc, #16]	; (80e0600 <fdcan_test+0x14>)
+ 80e05ee:	681b      	ldr	r3, [r3, #0]
+ 80e05f0:	f8d3 00a4 	ldr.w	r0, [r3, #164]	; 0xa4
+ 80e05f4:	f010 007f 	ands.w	r0, r0, #127	; 0x7f
+ 80e05f8:	bf18      	it	ne
+ 80e05fa:	2001      	movne	r0, #1
+ 80e05fc:	4770      	bx	lr
+ 80e05fe:	bf00      	nop
+ 80e0600:	2400008c 	.word	0x2400008c
 
-080e0600 <fdcan_read>:
- 80e0600:	b538      	push	{r3, r4, r5, lr}
- 80e0602:	4604      	mov	r4, r0
- 80e0604:	f7ff fff0 	bl	80e05e8 <fdcan_test>
- 80e0608:	b150      	cbz	r0, 80e0620 <fdcan_read+0x20>
- 80e060a:	4d06      	ldr	r5, [pc, #24]	; (80e0624 <fdcan_read+0x24>)
- 80e060c:	1ca3      	adds	r3, r4, #2
- 80e060e:	2140      	movs	r1, #64	; 0x40
- 80e0610:	4805      	ldr	r0, [pc, #20]	; (80e0628 <fdcan_read+0x28>)
- 80e0612:	462a      	mov	r2, r5
- 80e0614:	f000 fe52 	bl	80e12bc <HAL_FDCAN_GetRxMessage>
- 80e0618:	682b      	ldr	r3, [r5, #0]
- 80e061a:	2000      	movs	r0, #0
- 80e061c:	8023      	strh	r3, [r4, #0]
- 80e061e:	bd38      	pop	{r3, r4, r5, pc}
- 80e0620:	2001      	movs	r0, #1
- 80e0622:	e7fc      	b.n	80e061e <fdcan_read+0x1e>
- 80e0624:	2400002c 	.word	0x2400002c
- 80e0628:	2400008c 	.word	0x2400008c
+080e0604 <fdcan_read>:
+ 80e0604:	b538      	push	{r3, r4, r5, lr}
+ 80e0606:	4604      	mov	r4, r0
+ 80e0608:	f7ff fff0 	bl	80e05ec <fdcan_test>
+ 80e060c:	b150      	cbz	r0, 80e0624 <fdcan_read+0x20>
+ 80e060e:	4d06      	ldr	r5, [pc, #24]	; (80e0628 <fdcan_read+0x24>)
+ 80e0610:	1ca3      	adds	r3, r4, #2
+ 80e0612:	2140      	movs	r1, #64	; 0x40
+ 80e0614:	4805      	ldr	r0, [pc, #20]	; (80e062c <fdcan_read+0x28>)
+ 80e0616:	462a      	mov	r2, r5
+ 80e0618:	f000 fe50 	bl	80e12bc <HAL_FDCAN_GetRxMessage>
+ 80e061c:	682b      	ldr	r3, [r5, #0]
+ 80e061e:	2000      	movs	r0, #0
+ 80e0620:	8023      	strh	r3, [r4, #0]
+ 80e0622:	bd38      	pop	{r3, r4, r5, pc}
+ 80e0624:	2001      	movs	r0, #1
+ 80e0626:	e7fc      	b.n	80e0622 <fdcan_read+0x1e>
+ 80e0628:	2400002c 	.word	0x2400002c
+ 80e062c:	2400008c 	.word	0x2400008c
 
-080e062c <flash_read>:
- 80e062c:	f100 4378 	add.w	r3, r0, #4160749568	; 0xf8000000
- 80e0630:	f5b3 2f60 	cmp.w	r3, #917504	; 0xe0000
- 80e0634:	b570      	push	{r4, r5, r6, lr}
- 80e0636:	4604      	mov	r4, r0
- 80e0638:	460e      	mov	r6, r1
- 80e063a:	4615      	mov	r5, r2
- 80e063c:	d20e      	bcs.n	80e065c <flash_read+0x30>
- 80e063e:	f000 ff31 	bl	80e14a4 <HAL_FLASH_Unlock>
- 80e0642:	2300      	movs	r3, #0
- 80e0644:	42ab      	cmp	r3, r5
- 80e0646:	d103      	bne.n	80e0650 <flash_read+0x24>
- 80e0648:	f000 ff3e 	bl	80e14c8 <HAL_FLASH_Lock>
- 80e064c:	2000      	movs	r0, #0
- 80e064e:	bd70      	pop	{r4, r5, r6, pc}
- 80e0650:	f854 2023 	ldr.w	r2, [r4, r3, lsl #2]
- 80e0654:	f846 2023 	str.w	r2, [r6, r3, lsl #2]
- 80e0658:	3301      	adds	r3, #1
- 80e065a:	e7f3      	b.n	80e0644 <flash_read+0x18>
- 80e065c:	2001      	movs	r0, #1
- 80e065e:	e7f6      	b.n	80e064e <flash_read+0x22>
+080e0630 <flash_read>:
+ 80e0630:	f100 4378 	add.w	r3, r0, #4160749568	; 0xf8000000
+ 80e0634:	f5b3 2f40 	cmp.w	r3, #786432	; 0xc0000
+ 80e0638:	b570      	push	{r4, r5, r6, lr}
+ 80e063a:	4604      	mov	r4, r0
+ 80e063c:	460e      	mov	r6, r1
+ 80e063e:	4615      	mov	r5, r2
+ 80e0640:	d20e      	bcs.n	80e0660 <flash_read+0x30>
+ 80e0642:	f000 ff2f 	bl	80e14a4 <HAL_FLASH_Unlock>
+ 80e0646:	2300      	movs	r3, #0
+ 80e0648:	42ab      	cmp	r3, r5
+ 80e064a:	d103      	bne.n	80e0654 <flash_read+0x24>
+ 80e064c:	f000 ff3c 	bl	80e14c8 <HAL_FLASH_Lock>
+ 80e0650:	2000      	movs	r0, #0
+ 80e0652:	bd70      	pop	{r4, r5, r6, pc}
+ 80e0654:	f854 2023 	ldr.w	r2, [r4, r3, lsl #2]
+ 80e0658:	f846 2023 	str.w	r2, [r6, r3, lsl #2]
+ 80e065c:	3301      	adds	r3, #1
+ 80e065e:	e7f3      	b.n	80e0648 <flash_read+0x18>
+ 80e0660:	2001      	movs	r0, #1
+ 80e0662:	e7f6      	b.n	80e0652 <flash_read+0x22>
 
-080e0660 <flash_erase>:
- 80e0660:	2807      	cmp	r0, #7
- 80e0662:	b513      	push	{r0, r1, r4, lr}
- 80e0664:	d01d      	beq.n	80e06a2 <flash_erase+0x42>
- 80e0666:	2907      	cmp	r1, #7
- 80e0668:	d01b      	beq.n	80e06a2 <flash_erase+0x42>
- 80e066a:	4c0f      	ldr	r4, [pc, #60]	; (80e06a8 <flash_erase+0x48>)
+080e0664 <flash_erase>:
+ 80e0664:	2905      	cmp	r1, #5
+ 80e0666:	b513      	push	{r0, r1, r4, lr}
+ 80e0668:	d81b      	bhi.n	80e06a2 <flash_erase+0x3e>
+ 80e066a:	4c0f      	ldr	r4, [pc, #60]	; (80e06a8 <flash_erase+0x44>)
  80e066c:	2300      	movs	r3, #0
  80e066e:	6023      	str	r3, [r4, #0]
  80e0670:	2320      	movs	r3, #32
  80e0672:	60a0      	str	r0, [r4, #8]
  80e0674:	6123      	str	r3, [r4, #16]
  80e0676:	2301      	movs	r3, #1
- 80e0678:	4419      	add	r1, r3
- 80e067a:	6063      	str	r3, [r4, #4]
- 80e067c:	1a09      	subs	r1, r1, r0
- 80e067e:	60e1      	str	r1, [r4, #12]
+ 80e0678:	6063      	str	r3, [r4, #4]
+ 80e067a:	1a1b      	subs	r3, r3, r0
+ 80e067c:	440b      	add	r3, r1
+ 80e067e:	60e3      	str	r3, [r4, #12]
  80e0680:	f000 ff10 	bl	80e14a4 <HAL_FLASH_Unlock>
  80e0684:	4620      	mov	r0, r4
  80e0686:	a901      	add	r1, sp, #4
  80e0688:	f000 ffbe 	bl	80e1608 <HAL_FLASHEx_Erase>
  80e068c:	4604      	mov	r4, r0
- 80e068e:	b128      	cbz	r0, 80e069c <flash_erase+0x3c>
+ 80e068e:	b128      	cbz	r0, 80e069c <flash_erase+0x38>
  80e0690:	24ff      	movs	r4, #255	; 0xff
  80e0692:	f000 ff19 	bl	80e14c8 <HAL_FLASH_Lock>
  80e0696:	4620      	mov	r0, r4
  80e0698:	b002      	add	sp, #8
  80e069a:	bd10      	pop	{r4, pc}
  80e069c:	f000 ff14 	bl	80e14c8 <HAL_FLASH_Lock>
- 80e06a0:	e7f9      	b.n	80e0696 <flash_erase+0x36>
+ 80e06a0:	e7f9      	b.n	80e0696 <flash_erase+0x32>
  80e06a2:	2401      	movs	r4, #1
- 80e06a4:	e7f7      	b.n	80e0696 <flash_erase+0x36>
+ 80e06a4:	e7f7      	b.n	80e0696 <flash_erase+0x32>
  80e06a6:	bf00      	nop
  80e06a8:	24000078 	.word	0x24000078
 
@@ -511,7 +511,7 @@ Disassembly of section .text:
 
 080e0734 <flash_write>:
  80e0734:	f100 4378 	add.w	r3, r0, #4160749568	; 0xf8000000
- 80e0738:	f5b3 2f60 	cmp.w	r3, #917504	; 0xe0000
+ 80e0738:	f5b3 2f40 	cmp.w	r3, #786432	; 0xc0000
  80e073c:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
  80e0740:	4606      	mov	r6, r0
  80e0742:	460d      	mov	r5, r1
@@ -527,7 +527,7 @@ Disassembly of section .text:
  80e075e:	f7ff ffa5 	bl	80e06ac <__flash_get_sector>
  80e0762:	4601      	mov	r1, r0
  80e0764:	4620      	mov	r0, r4
- 80e0766:	f7ff ff7b 	bl	80e0660 <flash_erase>
+ 80e0766:	f7ff ff7d 	bl	80e0664 <flash_erase>
  80e076a:	b9d8      	cbnz	r0, 80e07a4 <flash_write+0x70>
  80e076c:	4620      	mov	r0, r4
  80e076e:	f8df 8038 	ldr.w	r8, [pc, #56]	; 80e07a8 <flash_write+0x74>
@@ -552,7 +552,7 @@ Disassembly of section .text:
  80e07a0:	f000 fe92 	bl	80e14c8 <HAL_FLASH_Lock>
  80e07a4:	25ff      	movs	r5, #255	; 0xff
  80e07a6:	e7cf      	b.n	80e0748 <flash_write+0x14>
- 80e07a8:	080dffff 	.word	0x080dffff
+ 80e07a8:	080bffff 	.word	0x080bffff
 
 080e07ac <Error_Handler>:
  80e07ac:	b510      	push	{r4, lr}
@@ -775,7 +775,7 @@ Disassembly of section .text:
  80e0a12:	4639      	mov	r1, r7
  80e0a14:	4620      	mov	r0, r4
  80e0a16:	f000 fd07 	bl	80e1428 <HAL_FDCAN_ActivateNotification>
- 80e0a1a:	f7ff fd98 	bl	80e054e <bootloader_start>
+ 80e0a1a:	f7ff fd9a 	bl	80e0552 <bootloader_start>
  80e0a1e:	e7fe      	b.n	80e0a1e <main+0x19e>
  80e0a20:	58024400 	.word	0x58024400
  80e0a24:	58021800 	.word	0x58021800

@@ -91,7 +91,7 @@ void const __b_read_memory(fdcan_packet_t* packet){
 	sector = packet->data[0];
 	address = flash_get_sector_starting_address(sector);
 
-	if (address == FLASH_SECTOR_ERROR || address == FLASH_PROTECTED_SECTOR) {
+	if (address == FLASH_SECTOR_ERROR || sector >= FLASH_PROTECTED_SECTOR2) {
 		__b_send_nack(packet);
 		return;
 	}
@@ -138,7 +138,7 @@ void const __b_write_memory(fdcan_packet_t* packet){
 	sector = packet->data[0];
 	address = flash_get_sector_starting_address(sector);
 
-	if (address == FLASH_SECTOR_ERROR || address == FLASH_PROTECTED_SECTOR) {
+	if (address == FLASH_SECTOR_ERROR || sector >= FLASH_PROTECTED_SECTOR1) {
 		__b_send_nack(packet);
 		return;
 	}
@@ -189,7 +189,7 @@ void const __b_erase_memory(fdcan_packet_t* packet){
 	sector1 = packet->data[0];
 	sector2 = packet->data[1];
 
-	if (sector1 > FLASH_MAX_SECTOR || sector2 > FLASH_MAX_SECTOR) {
+	if (sector1 > sector2 || sector1 < FLASH_SECTOR_0 || sector2 > FLASH_MAX_SECTOR) {
 		__b_send_nack(packet);
 		return;
 	}

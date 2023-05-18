@@ -1504,29 +1504,29 @@ LOAD c:/st/stm32cubeide_1.8.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x00000000080e0404       0x2c ./Core/App/Bootloader.o
                 0x00000000080e0404                __b_wait_for_ack
  .text.__b_read_memory
-                0x00000000080e0430       0x84 ./Core/App/Bootloader.o
+                0x00000000080e0430       0x86 ./Core/App/Bootloader.o
                 0x00000000080e0430                __b_read_memory
  .text.__b_write_memory
-                0x00000000080e04b4       0x9a ./Core/App/Bootloader.o
-                0x00000000080e04b4                __b_write_memory
+                0x00000000080e04b6       0x9c ./Core/App/Bootloader.o
+                0x00000000080e04b6                __b_write_memory
  .text.bootloader_start
-                0x00000000080e054e       0x56 ./Core/App/Bootloader.o
-                0x00000000080e054e                bootloader_start
+                0x00000000080e0552       0x56 ./Core/App/Bootloader.o
+                0x00000000080e0552                bootloader_start
  .text.fdcan_transmit
-                0x00000000080e05a4       0x44 ./Core/App/FDCAN.o
-                0x00000000080e05a4                fdcan_transmit
+                0x00000000080e05a8       0x44 ./Core/App/FDCAN.o
+                0x00000000080e05a8                fdcan_transmit
  .text.fdcan_test
-                0x00000000080e05e8       0x18 ./Core/App/FDCAN.o
-                0x00000000080e05e8                fdcan_test
+                0x00000000080e05ec       0x18 ./Core/App/FDCAN.o
+                0x00000000080e05ec                fdcan_test
  .text.fdcan_read
-                0x00000000080e0600       0x2c ./Core/App/FDCAN.o
-                0x00000000080e0600                fdcan_read
+                0x00000000080e0604       0x2c ./Core/App/FDCAN.o
+                0x00000000080e0604                fdcan_read
  .text.flash_read
-                0x00000000080e062c       0x34 ./Core/App/Flash.o
-                0x00000000080e062c                flash_read
+                0x00000000080e0630       0x34 ./Core/App/Flash.o
+                0x00000000080e0630                flash_read
  .text.flash_erase
-                0x00000000080e0660       0x4c ./Core/App/Flash.o
-                0x00000000080e0660                flash_erase
+                0x00000000080e0664       0x48 ./Core/App/Flash.o
+                0x00000000080e0664                flash_erase
  .text.__flash_get_sector
                 0x00000000080e06ac       0x76 ./Core/App/Flash.o
                 0x00000000080e06ac                __flash_get_sector

@@ -67,7 +67,7 @@ flash_error const flash_write(uint32_t dest_addr, uint32_t* data, uint32_t numbe
 }
 
 flash_error const flash_erase(const sector_t start_sector, const sector_t end_sector){
-	if (start_sector == FLASH_PROTECTED_SECTOR || end_sector == FLASH_PROTECTED_SECTOR) {
+	if (start_sector < FLASH_SECTOR_0 || end_sector >= FLASH_PROTECTED_SECTOR1) {
 		return FLASH_PROTECTED_MEM;
 	}
 

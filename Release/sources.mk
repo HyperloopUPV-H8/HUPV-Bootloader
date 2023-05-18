@@ -18,6 +18,7 @@ OBJDUMP_LIST :=
 C_UPPER_DEPS := 
 S_DEPS := 
 C_DEPS := 
+OBJCOPY_BIN := 
 CC_DEPS := 
 SIZE_OUTPUT := 
 C++_DEPS := 

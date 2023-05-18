@@ -79,7 +79,7 @@ all: main-build
 main-build: HUPV-Bootloader.elf secondary-outputs
 
 dependents:
-	-cd C:/Users/pablo/Desktop/Hyperloop\ UPV/H8/TESTING/HUPV-Bootloader/Release && $(MAKE) all
+	-cd C:/Users/pablo/Desktop/Hyperloop\ UPV/H8/TESTING/HUPV-Bootloader/Release && $(MAKE) clean all
 
 # Tool invocations
 HUPV-Bootloader.elf HUPV-Bootloader.map: $(OBJS) $(USER_OBJS) C:/Users/pablo/Desktop/Hyperloop\ UPV/H8/TESTING/HUPV-Bootloader/Release/HUPV-Bootloader.elf C:\Users\pablo\Desktop\Hyperloop\ UPV\H8\TESTING\HUPV-Bootloader\STM32H723ZGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)

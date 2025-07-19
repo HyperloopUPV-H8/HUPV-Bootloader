@@ -1,0 +1,3 @@
+FDCAN.c:14:21:fdcan_transmit	1
+FDCAN.c:44:11:fdcan_test	1
+FDCAN.c:33:21:fdcan_read	2

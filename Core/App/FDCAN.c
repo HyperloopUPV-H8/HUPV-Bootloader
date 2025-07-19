@@ -13,15 +13,15 @@ FDCAN_RxHeaderTypeDef rx_header_buffer;
 
 fdcan_error_t const fdcan_transmit(fdcan_packet_t* packet){
 
-	tx_header.Identifier = (uint32_t)packet->identifier;
-	tx_header.IdType = FDCAN_STANDARD_ID;
-	tx_header.TxFrameType = FDCAN_DATA_FRAME;
-	tx_header.DataLength = FDCAN_DLC_BYTES_64;
-	tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	tx_header.BitRateSwitch = FDCAN_BRS_ON;
-	tx_header.FDFormat = FDCAN_FD_CAN;
-	tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-	tx_header.MessageMarker = 0;
+		tx_header.Identifier = (uint32_t)packet->identifier;
+		tx_header.IdType = FDCAN_EXTENDED_ID;
+		tx_header.TxFrameType = FDCAN_DATA_FRAME;
+		tx_header.DataLength = FDCAN_DLC_BYTES_64;
+		tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+		tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+		tx_header.FDFormat = FDCAN_FD_CAN;
+		tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+		tx_header.MessageMarker = 0;
 
 	if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &tx_header, packet->data) != HAL_OK) {
 		return FDCAN_ERROR;

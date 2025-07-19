@@ -136,6 +136,8 @@ void const __b_write_memory(fdcan_packet_t* packet){
 	uint16_t i, counter = 1;
 
 	sector = packet->data[0];
+	uint32_t max_address =(packet->data[1] << 24 |packet->data[2] << 16 |packet->data[3] << 8|packet->data[4]);
+	max_address = (max_address/4);
 	address = flash_get_sector_starting_address(sector);
 
 	if (address == FLASH_SECTOR_ERROR || sector >= FLASH_PROTECTED_SECTOR1) {
@@ -150,7 +152,7 @@ void const __b_write_memory(fdcan_packet_t* packet){
 		return;
 	}
 
-	for (i = 0; i < SECTOR_SIZE_IN_32BITS_WORDS; i +=16) {
+	for (i = 0; i < max_address; i +=16) {
 		__b_wait_until_fdcan_message_received();
 		if (fdcan_read(packet) != FDCAN_OK) {
 			__b_send_nack(packet);
@@ -178,7 +180,7 @@ void const __b_write_memory(fdcan_packet_t* packet){
 
 	}
 
-	flash_write(address, buffer, SECTOR_SIZE_IN_32BITS_WORDS);
+	flash_write(address, buffer, (max_address*4));
 
 	__b_send_ack(packet);
 }

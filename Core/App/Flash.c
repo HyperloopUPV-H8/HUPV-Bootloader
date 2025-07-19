@@ -42,13 +42,14 @@ flash_error const flash_write(uint32_t dest_addr, uint32_t* data, uint32_t numbe
 
 	uint32_t end_address = dest_addr + ((number_of_words * FLASH_32BITS_WORLD) - FLASH_32BITS_WORLD);
 	uint32_t end_sector = __flash_get_sector(end_address);
+	uint32_t write_number = (number_of_words/4);
 
 	if (flash_erase(start_sector, end_sector) != FLASH_OK) {
 		return FLASH_ERROR;
 	}
 
 	HAL_FLASH_Unlock();
-	while(index < (uint32_t)SECTOR_SIZE_IN_32BITS_WORDS){
+	while(index < write_number){
 		if (start_sector_addr > FLASH_CODE_END_ADDRESS) {
 			return FLASH_PROTECTED_MEM;
 		}

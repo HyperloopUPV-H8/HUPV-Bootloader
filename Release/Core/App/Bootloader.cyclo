@@ -1,0 +1,15 @@
+Bootloader.c:214:12:__b_data_copy_to_packet	2
+Bootloader.c:222:12:__b_data_copy_from_packet	2
+Bootloader.c:260:16:__b_get_addr_from_data	1
+Bootloader.c:266:12:__b_clean_fdcan_packet_data	1
+Bootloader.c:248:12:__b_send_ack	1
+Bootloader.c:254:12:__b_send_nack	1
+Bootloader.c:73:12:__b_get_version	2
+Bootloader.c:188:12:__b_erase_memory	4
+Bootloader.c:210:12:__b_go	1
+Bootloader.c:274:12:__b_clean_fdcan_packet_all	1
+Bootloader.c:285:26:__b_wait_until_fdcan_message_received	3
+Bootloader.c:230:26:__b_wait_for_ack	3
+Bootloader.c:85:12:__b_read_memory	9
+Bootloader.c:132:12:__b_write_memory	9
+Bootloader.c:37:6:bootloader_start	7

@@ -1,5 +1,5 @@
 ../Core/App/Flash.c:16:19:flash_read	16	static
-../Core/App/Flash.c:69:19:flash_erase	16	static
-../Core/App/Flash.c:97:16:__flash_get_sector	0	static
-../Core/App/Flash.c:137:16:flash_get_sector_starting_address	0	static
-../Core/App/Flash.c:33:19:flash_write	24	static
+../Core/App/Flash.c:70:19:flash_erase	16	static
+../Core/App/Flash.c:98:16:__flash_get_sector	0	static
+../Core/App/Flash.c:138:16:flash_get_sector_starting_address	0	static
+../Core/App/Flash.c:33:19:flash_write	32	static
